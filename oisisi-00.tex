@@ -9,15 +9,21 @@
 \usepackage{xunicode}
 \usepackage{xltxtra}
 \usepackage{polyglossia}
+\usepackage{minted}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\usepackage{xcolor,colortbl}
+\usepackage{textcomp}
 %\setdefaultlanguage[script=Latin]{serbian}
 
-\title{Algoritmi i strukture podataka}
-\subtitle{Slajdovi sa predavanja}
+\title{Osnovi informacionih sistema\\ i softverskog inženjerstva}
+\subtitle{Drugi deo: Algoritmi i strukture podataka i Python}
 \author{Branko Milosavljević}
 \institute{Katedra za informatiku, Fakultet tehničkih nauka, Univerzitet u
 Novom Sadu}
-\date{2018.}
-\subject{Predavanja sa ASP}
+\date{2019.}
+\subject{Predavanja sa OISISI}
 
 \begin{document}
 
@@ -27,8 +33,9 @@ Novom Sadu}
 \frame{
   \frametitle{Obrazovni cilj}
   \begin{itemize}
+    \item savladavanje programskog jezika Python
     \item poznavanje principa rada i implementiranje algoritama i struktura
-    podataka u operativnoj memoriji
+      podataka u operativnoj memoriji
   \end{itemize}
 }
 \frame{
@@ -50,23 +57,6 @@ Novom Sadu}
   \end{itemize}
 }
 \frame{
-  \frametitle{Organizacija nastave}
-  \begin{itemize}
-    \item predavanja: 3 časa nedeljno (svi zajedno)
-    \item vežbe: 3 časa nedeljno (po grupama)
-  \end{itemize}
-}
-\frame{
-  \frametitle{Nastavnici}
-  \begin{itemize}
-    \item Branko Milosavljević \\ \texttt{mbranko@uns.ac.rs}
-    \item Bojana Zoranović \\ \texttt{bojana.zoranovic@uns.ac.rs} \\ \ \\ 
-    \item konsultacije putem emaila
-    \item ili uživo u unapred dogovorenom terminu
-    \item ili na \url{http://enastava.ftninformatika.com}
-  \end{itemize}
-}
-\frame{
   \frametitle{Literatura}
   \begin{itemize}
     \item Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser. {\em
@@ -80,19 +70,11 @@ Novom Sadu}
   \frametitle{Nastavni materijal}
   \begin{itemize}
     \item sajt predmeta:
-      \url{http://enastava.ftninformatika.com} \\ \ \\
+      \url{http://enastava.ftninformatika.com/courses/290/} \\ \ \\
     \item slajdovi sa predavanja
     \item zadaci sa vežbi
     \item domaći zadaci
   \end{itemize}
 }
-\frame{
-  \frametitle{Polaganje ispita}
-  \begin{itemize}
-    \item domaći zadaci
-    \item projekat \#1: sredinom semestra
-    \item projekat \#2: na kraju semestra
-    \item usmeni ispit
-  \end{itemize}
-}
+
 \end{document}

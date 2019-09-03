@@ -6,7 +6,7 @@ inženjerstva, generacija 2019.
 ## Prevođenje
 
 ```
-xelatex -shell-escape oisisi-*.tex
-xelatex -shell-escape oisisi-*.tex
+for i in oisisi-*.tex; do xelatex -shell-escape $i; done
+for i in oisisi-*.tex; do xelatex -shell-escape $i; done
 ```
 s

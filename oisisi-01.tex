@@ -473,7 +473,7 @@ print("The sum of the first", NUM_VALUES,
 \end{minted}
 \end{frame}
   
-\section{Funkcije}
+\section{Funkcije 1}
 
 \begin{frame}[fragile]
 \frametitle{Funkcija}
@@ -524,7 +524,7 @@ y = abs(x)
 \end{itemize}
 \end{frame}
 
-\section{Moduli}
+\section{Moduli 1}
 
 \begin{frame}[fragile]
 \frametitle{Pojam modula}
@@ -990,7 +990,526 @@ print("Pay:         %8.2f" % takeHome)
 \end{minted}
 \end{frame}
 
+\section[Kontrola toka]{Grananje i petlje}
 
+\begin{frame}[fragile]
+\frametitle{Tip \texttt{bool}}
+\begin{itemize}
+  \item dve vrednosti, \texttt{True} i \texttt{False}
+  \item numeričke vrednosti jednake nuli tumače se kao \texttt{False}, inače kao \texttt{True}
+  \item za druge objekte, ne-prazni objekti tumače se kao \texttt{True}, prazni kao \texttt{False}
+  \item funkcija \texttt{bool(x)} poštuje ova pravila za konverziju
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+x = bool("")     # False
+y = bool(0)      # False
+z = bool(17.2)   # True
+w = bool("abc")  # True
+\end{minted}
+\end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Logički izrazi}
+\begin{itemize}
+  \item rezultat je \texttt{bool} vrednost
+  \item relacioni operatori: <, >, <=, >=, ==, !=, <>
+  \item logički operatori: \texttt{and}, \texttt{or}, \texttt{not}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Poređenje i reference}
+\begin{itemize}
+  \item Java: operator == poredi reference, a ne vrednosti
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{java}
+String name1 = "Smith";
+String name2 = "Jones";
+if (name1 == name2)
+  System.out.println("Name1 and Name2 are aliases.");
+\end{minted}
+\begin{itemize}
+  \item Python: operator == poredi vrednosti
+  \item poređenje objekata podrazumeva poređenje svih atributa
+  \item operator \texttt{is} poredi reference
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+name1 = "Smith"
+name2 = "Jones"
+name3 = name1
+result1 = name1 is name2  # False
+result2 = name1 is name3  # True
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Null referenca}
+\begin{itemize}
+  \item null referenca je predstavljena posebnim izrazom \texttt{None}
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+# The is operator along with None can tests for null references.
+result1 = name1 is None
+result2 = name1 == None
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Naredba \texttt{if}}
+\begin{itemize}
+  \item nema zagrade oko uslova
+  \item dvotačka pre bloka naredbi
+  \item blok može imati jednu naredbu, ali je i dalje blok
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+import math
+
+value = int(input("Enter a value: "))
+
+if value < 0:
+    print("The value is negative. Converting to positive.")
+    value = abs(value)
+
+sqroot = math.sqrt(value)
+
+print("The square root of", value, "is", sqroot)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{if}-\texttt{else}}
+\begin{itemize}
+  \item \texttt{else} takođe ima svoj blok naredbi
+  \item dakle, i dvotačku
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+if value < 0:
+    print("The value is negative.")
+    value = abs(value)
+else:
+    print("The value is positive.")
+\end{minted}
+\end{frame}
+  
+\begin{frame}[fragile]
+\frametitle{Višestruko grananje}
+\begin{itemize}
+  \item ne postoji \texttt{switch}
+  \item koristi se \texttt{if} - \texttt{elif} - \texttt{else} konstrukcija
+  \item uslovi se testiraju sekvencijalno, do prvog ispunjenog ili kraja
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+if avgGrade >= 90.0 :
+   letterGrade = "A"
+elif avgGrade >= 80.0 :
+   letterGrade = "B"
+elif avgGrade >= 70.0 :
+   letterGrade = "C"
+elif avgGrade >= 60.0 :
+   letterGrade = "D"
+else:
+   letterGrade = "F"
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Poređenje stringova}
+\begin{itemize}
+  \item Java: pomoću metoda klase String
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{java}
+String str1 = "Abc Def";
+String str2 = "Abc def";
+if (str1.equals(str2))
+  System.out.println("Equal!!");
+else
+  System.out.println("Not Equal!!");
+\end{minted}
+\begin{itemize}
+  \item Python: pomoću običnih operatora
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+str1 = "Abc Def"
+str2 = "Abc def"
+if str1 == str2:
+    print "Equal!!"
+else:
+    print "Not Equal!!"
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Podstring u stringu}
+\begin{itemize}
+  \item Java: metoda \texttt{contains}
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{java}
+if (name1.contains("Smith"))
+  System.out.println(name1);
+\end{minted}
+\begin{itemize}
+  \item Python: operator \texttt{in}
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+if "Smith" in name1:
+    print name1
+if "Jones" not in name1:
+    print "Name not found"  
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{While petlja}
+\begin{itemize}
+  \item i za \emph{event-controlled} i za \emph{count-controlled} petlje
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+theSum = 0
+i = 1
+while i <= 100:
+    theSum = theSum + i
+    i = i + 1
+print("The sum =", theSum)
+\end{minted}
+\begin{itemize}
+  \item while petlja očekuje blok naredbi
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+value = 0
+while value < 0:
+    value = int(input("Enter a postive integer: "))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{For petlja}
+\begin{itemize}
+  \item iterira kroz sekvencu bilo čega - tuple, list, str, ...
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+for <loop-var> in <object>:
+    <statement-block>
+\end{minted}
+\begin{itemize}
+  \item indeks promenljiva uzima vrednost iz sekvence
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+for i in range(1, 11):
+    print(i)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primer: iteracija}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# avgvalue.py
+# Reads a group of positive integer values from the user,
+# one at a time, until a negative value is entered. The average
+# value is then computed and displayed.
+
+total = 0
+count = 0
+
+value = int(input("Enter an integer value (< 0 to quit): "))
+while value >= 0:
+   total = total + value
+   count = count + 1
+   value = int(input( "Enter an integer value (< 0 to quit): "))
+   
+avg = float(total) / count
+print("The average of the", count, "values you entered is", avg)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primer: stringovi}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# countvowels.py
+# This program iterates through a string and counts the number of
+# vowels it contains.
+
+text = input("Enter a string to be evaluated: ")
+
+numVowels = 0
+for ch in text:
+    if ch in "aeiou":
+        numVowels = numVowels + 1
+     
+print("There are " + str(numVowels) + " vowels in the string.")
+\end{minted}
+\end{frame}
+
+\section{Funkcije 2}
+
+\begin{frame}[fragile]
+\frametitle{Definicija funkcije}
+\begin{itemize}
+  \item obuhvata zaglavlje i telo
+  \item zaglavlje počinje sa \texttt{def}
+  \item telo je blok naredbi
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+def sumRange(first, last):
+    total = 0
+    i = first
+    while i <= last:
+        total = total + i
+        i = i + 1
+    return total
+\end{minted}
+\begin{itemize}
+  \item sopstvena funkcija poziva se kao i svaka druga
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+start = 1
+end = 100
+theSum = sumRange(start, end)
+print("The sum of the integers between", start,
+      "and", end, "is", theSum)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Parametri funkcije}
+\begin{itemize}
+  \item parametri su uvek reference na objekte
+  \item formalni parametri pokazuju na iste objekte na koje i stvarni
+\end{itemize}
+\begin{center}
+  \includegraphics[scale=0.7]{fnctalias.png}
+\end{center}
+\begin{itemize}
+  \item vrednost parametra može se promeniti tako da promena bude vidljiva po 
+    povratku iz funkcije
+  \item ako je parametar promenljivi objekat
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Tipizacija parametara i polimorfizam}
+\begin{itemize}
+  \item tipovi parametara se ne navode
+  \item funkcija se može pozvati za parametre različitih tipova
+  \item na primer, \texttt{float} umesto \texttt{int}
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+theSum = sumRange(1.37, 15.78)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Podrazumevane vrednosti parametara}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+def sumRange2(first, last, step=1) :
+    total = 0
+    i = first
+    while i <= last :
+        total = total + i
+        i = i + step
+    return total
+\end{minted}
+\begin{itemize}
+  \item može se pozvati na više načina:
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+theSum = sumRange2(1, 100)
+theSum = sumRange2(1, 100, 2)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Podrazumevane vrednosti parametara}
+\begin{itemize}
+  \item svi parametri nakon prvog koji ima default moraju imati default
+  \item ovo je nemoguće:
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+def foo(argA, argB=0, argC):
+    print(argA, argB, argC)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Imenovani parametri u pozivu}
+\begin{itemize}
+  \item redosled parametara ne mora se poštovati ako se parametri imenuju
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+theSum = sumRange2(last = 100, step = 3, first = 1)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Rezultat funkcije}
+\begin{itemize}
+  \item svaka funkcija vraća vrednost
+  \item ako ne definišemo povratnu vrednost, vraća se \texttt{None}
+  \item moguće je vratiti više vrednosti odjednom smeštajući ih u tuple
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+def powr(x):
+    return x, x**2, x**3, x**4
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funkcije su objekti}
+\begin{itemize}
+  \item \texttt{def} je naredba koju izvršava interpreter
+  \item kreira funkcijski objekat
+  \item naziv funkcije je zapravo promenljiva koja pokazuje na objekat
+\end{itemize}
+\begin{center}
+  \includegraphics[scale=0.7]{funcobject.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funkcije su objekti}
+\begin{itemize}
+  \item naredbe u telu funkcije se ne izvršavaju dok se funkcija ne pozove
+  \item bez obzira što se naredbe interpretiraju i konvertuju u bajt-kod
+  \item može se navesti poziv funkcije pre njene definicije
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+def run():
+    value = int(input("Enter a value: "))
+    print("The double of your value is",
+          doubleIt(value))
+
+def doubleIt(num):
+    return num * 2
+
+run()
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Poziv funkcije pre definicije --- izuzetak}
+\begin{itemize}
+  \item poziv funkcije pre njene definicije nije moguć na globalnom nivou
+  \item jer se tada još nije izvršila \texttt{def} naredba
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+# does not work
+callIt(5)
+
+def callIt(num):
+    return pow(num, 2)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Redosled funkcija}
+\begin{itemize}
+  \item redosled funkcija u fajlu nije bitan
+  \item redosled naredbi na globalnom nivou jeste
+  \item zgodan recept
+  \begin{enumerate}
+    \item naredbe na globalnom nivou stavi u posebnu funkciju
+    \item pozovi je na kraju fajla
+  \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Redosled funkcija: primer}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+from random import *
+MIN_SIDES = 4
+
+def main():
+    print("Dice roll simulation.")
+    numSides = int(input( "How many sides should the die have? "))
+       
+    if numSides < MIN_SIDES :
+        numSides = MIN_SIDES
+    value = rollDice(numSides)
+    print("You rolled a", value)
+   
+def rollDice(nSides):
+    die1 = randint(1, nSides + 1)
+    die2 = randint(1, nSides + 1)
+    return die1 + die2
+   
+main()
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Opseg vidljivosti promenljivih}
+\begin{itemize}
+  \item \myred{built-in}: promenljive i literali definisani na nivou jezika; uvek dostupni
+  \item \myred{global} ili \myred{module}: promenljive kreirane na najvišem nivou u fajlu (izvan funkcija i klasa); dostupne samo u okviru svog modula
+  \item \myred{local}: promenljive kreirane u okviru funkcije su vidljive samo unutar funkcije; parametri su lokalni
+  \item \myred{instance}: promenljive definisane kao atributi objekta
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Upotreba globalnih promenljivih}
+\begin{itemize}
+  \item mogu se koristiti unutar funkcija
+  \item primer:
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+varA = 40
+
+def one(varB):
+    varC = varA + varB
+    return varC
+
+print(varA, one(20))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Upotreba globalnih promenljivih}
+\begin{itemize}
+  \item šta ako pokušamo da menjamo vrednost globalne promenljive unutar funkcije?
+  \item primer:
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+varA = 40
+
+def one(varB):
+    varC = varA + varB
+    varA = 0
+    return varC
+
+print(varA, one(20))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Upotreba globalnih promenljivih}
+\begin{itemize}
+  \item dodela \texttt{varA = 0} unutar funkcije će kreirati novu lokalnu promenljivu
+\end{itemize}
+\begin{center}
+  \includegraphics[scale=0.7]{globalvar.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Izmena globalnih promenljivih unutar funkcije}
+\begin{itemize}
+  \item moramo da naglasimo da koristimo globalnu promenljivu
+  \item \texttt{global} naredba
+\end{itemize}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+varA = 40
+
+def one(varB):
+    global varA
+    varC = varA + varB
+    varA = 0
+    return varC
+
+print(varA, one(20))
+\end{minted}
+\end{frame}
+
+\section{Moduli 2}
 
 \end{document}

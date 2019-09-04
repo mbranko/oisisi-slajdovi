@@ -47,7 +47,6 @@ Novom Sadu}
     \item preklapanje operatora
     \item izuzeci
     \item nasleđivanje
-    \item kopiranje objekata
   \end{itemize}
 \end{frame}
 
@@ -1511,5 +1510,751 @@ print(varA, one(20))
 \end{frame}
 
 \section{Moduli 2}
+
+\begin{frame}[fragile]
+  \frametitle{Moduli}
+  \begin{itemize}
+    \item module možemo koristiti da grupišemo srodne klase i funkcije
+    \item veći program se sastoji od početnog fajla i dodatnih modula (fajlova)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primer upotrebe modula $_1$}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# driver.py
+# The driver file which contains the statements creating
+# the main flow of execution.
+
+import modA
+import modB
+
+value1 = int(input("Enter value one: "))
+value2 = int(input( "Enter value two: "))
+resultA = modA.funcA(value1, value2)
+resultB = modB.funcB(resultA)
+print("Results = ", resultA, resultB)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primer upotrebe modula $_2$}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# modA.py
+# A user-defined module which defines a function and
+# imports a standard module.
+
+from math import *
+
+def funcA(x, y):
+    d = sqrt(x * x + y * y)
+    return d
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primer upotrebe modula $_3$}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# modB.py
+# A second user-defined module which defines a function and
+# imports the other user-defined module as well as a
+# standard module.
+
+from modA import *
+
+def funcB(a) :
+    b = funcA(a, a * 4)
+    return b / 3 + funcC()
+
+def funcC(x = 0):
+    return x * 12
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Primer upotrebe modula $_4$}
+  \begin{center}
+    \includegraphics[scale=1]{pgmarch.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Primer upotrebe modula $_5$}
+  \begin{itemize}
+    \item \texttt{modA} je importovan dva puta: od strane \texttt{driver} i
+      \texttt{modB}
+    \item modul se interpretira jednom, bez obzira što se može importovati više puta!
+  \end{itemize}
+\end{frame}
+
+\section{Liste}
+
+\begin{frame}[fragile]
+\frametitle{Python lista}
+\begin{itemize}
+  \item \myred{terminologija}: Python lista je zapravo niz
+  \item čuva reference na objekte (bilo kog tipa)
+  \item nema fiksnu veličinu
+  \item automatsko proširivanje
+\end{itemize}
+
+\begin{minted}[linenos=false,fontsize=\footnotesize]{java}
+// Java niz
+int[] gradeList = {85, 90, 87, 65, 91};
+\end{minted}
+
+\ %
+
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# Python lista
+gradeList = [85, 90, 87, 65, 91]
+\end{minted}
+\begin{center}
+  \includegraphics[scale=0.7]{list.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Negativni indeksi}
+  \begin{itemize}
+    \item elementima liste može se pristupiti i preko negativnih indeksa
+    \item indeks -1 predstavlja poslednji element liste
+  \end{itemize}
+  \begin{center}
+    \includegraphics[scale=0.7]{list2.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Indeks izvan opsega}
+  \begin{itemize}
+    \item Java: \texttt{ArrayIndexOutOfBoundsException}
+    \item Python: \texttt{IndexError}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Inicijalizacija liste}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{java}
+// inicijalizacija Java niza
+int[] gradeHist = new int[10];
+for(int i = 0; i < gradeHist.length; i++)
+  gradeHist[i] = 0;
+\end{minted}
+
+\ %
+
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# inicijalizacija Python liste
+gradeHist = []
+for i in range(10):
+    gradeHist.append(0)
+
+# može i mnogo kraće
+gradeHist = [0] * 10
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Iteracija kroz listu}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+total = 0
+for value in valueList:
+    total = total + value
+avg = float(total) / len(valueList)
+print("The average value = %6.2f" % avg)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Izmena elementa liste}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+# initialize list
+x = [0] * 10
+
+# change element at index 3
+x[3] = 1
+
+# element does not have to be an int
+x[6] = "test"
+x[8] = [1, 2, 3]
+
+# slice out elements 3-5 in a new list
+y = x[3:6]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Tuple: nepromenljiva lista}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+t = (0, 2, 4)           # 3 element tuple
+a = (2,)                # 1 element tuple
+b = ('abc', 1, 4.5, 5)  # 4 element mixed tuple
+c = (0, ('a', 'b'))     # nested tuple
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operacije nad listom}
+\small
+\begin{tabular}{lp{8cm}}
+  \textbf{operacija} & \textbf{opis} \\ \hline
+  \texttt{a = []}        & Kreira praznu listu; kao kreiranje novog \texttt{ArrayList} objekta u Javi \\ \hline
+  \texttt{b = [0, 1, 2]} & Kreira i inicijalizuje listu pomoću literala \\ \hline
+  \texttt{b[i]}          & Pristupa \texttt{i}-tom elementu liste \texttt{b} \\ \hline
+  \texttt{b * 4}         & Kreira novu listu ponavljanjem liste \texttt{b} 4 puta \\ \hline
+  \texttt{a + b}         & Konkatenira liste \texttt{a} i \texttt{b} u novu listu \\ \hline
+  \texttt{del b[i]}      & Uklanja \texttt{i}-ti element iz liste \texttt{b} \\ \hline
+  \texttt{for x in list} & Iterira kroz elemente liste \\ \hline
+  \texttt{x in list}     & Određuje da li se \texttt{x} nalazi u listi \\ \hline
+  \texttt{len(b)}        & Vraća dužinu liste \texttt{b} \\ \hline
+  \texttt{b.append(obj)} & Dodaje \texttt{obj} na kraj liste \texttt{b} \\ \hline
+  \texttt{b.extend(a)}   & Dodaje sve elemente liste \texttt{a} na kraj liste \texttt{b} \\ \hline
+  \texttt{b.index(x)}    & Traži objekat \texttt{x} u listi \texttt{b}, vraća njegovu poziciju ili izuzetak \\ \hline
+  \texttt{b.reverse()}   & Obrće redosled elemenata liste \texttt{b} \\ \hline
+  \texttt{b.sort()}      & Sortira elemente liste \texttt{b}
+\end{tabular}
+\end{frame}
+
+\section{Fajlovi}
+
+\begin{frame}[fragile]
+\frametitle{Tekstualni fajlovi: otvaranje i zatvaranje}
+\begin{minted}[linenos=false,fontsize=\footnotesize]{python}
+infile = open('records.txt', 'r')    # read from file
+outfile1 = open('report1.txt', 'w')  # write to file (start from empty)
+outfile2 = open('report2.txt', 'a')  # append to file
+
+infile.close()
+outfile1.close()
+outfile2.close()
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{with} naredba}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+infile = open('records.txt', 'r')
+# some statements with infile
+infile.close()
+\end{minted}
+
+je ekvivalentno sa
+
+\begin{minted}[linenos=false,fontsize=\small]{python}
+with open('records.txt', 'r') as infile:
+    # some statements with infile
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Čitanje iz fajla}
+
+Čitanje fajla red po red:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+with open('records.txt', 'r') as infile:
+    while (line = infile.readline()) != "":
+        print(line)
+
+# kraće
+with open('records.txt', 'r') as infile:
+    for line in infile:
+        print(line)
+\end{minted}
+
+\ %
+
+Čitanje celog fajla u niz redova:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+all_lines = infile.readlines()
+\end{minted}
+
+\ %
+
+Čitanje celog fajla u jedan string:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+text = infile.read()
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Pisanje u fajl}
+
+\begin{minted}[linenos=false,fontsize=\small]{python}
+contents = ['Text', 'Text2', 'Text3']
+
+with open('output.txt', 'w') as outfile:
+    for line in contents:
+        outfile.write(line + '\n')
+\end{minted}
+\end{frame}
+
+\section[Dict]{Rečnici}
+
+\begin{frame}[fragile]
+  \frametitle{Rečnik}
+  \begin{itemize}
+    \item \myred{rečnik} (dictionary), za razliku od liste, ne poznaje redosled elemenata
+    \item elementi rečnika nisu dostupni putem indeksa, već putem \myred{ključa}
+    \item rečnik čuva \myred{parove ključ-vrednost}
+  \end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+>>> lozinke = {"guido":"superprogrammer", 
+        "turing":"genius", "bill":"monopoly"}
+>>> lozinke["guido"]
+'superprogrammer'
+>>> lozinke["bill"]
+'monopoly'
+\end{minted}
+  \begin{itemize}
+    \item šta je ovde ključ, a šta vrednost?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Rečnik $_2$}
+  \begin{itemize}
+    \item rečnici se mogu menjati
+  \end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+>>> lozinke["bill"] = "bluescreen"
+>>> lozinke
+{'turing': 'genius', 'bill': 'bluescreeen', 'guido': \
+ 'superprogrammer'}
+\end{minted}
+  \begin{itemize}
+    \item originalni redosled nije očuvan!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Rečnik $_3$}
+  \begin{itemize}
+    \item ključ može biti bilo koji \myred{immutable} tip - broj, string, tuple
+    \item vrednost može biti bilo kog tipa \\ \ \\
+    \item rečnici se retko javljaju u drugim programskim jezicima
+    \item u Pythonu se često koriste
+    \item efikasni su, mogu primiti stotine hiljada elemenata
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dodavanje elemenata u rečnik}
+  \begin{itemize}
+    \item rečnik može biti prazan: \texttt{\{\}}
+    \item dodavanje elementa u rečnik: upotrebi se novi ključ
+  \end{itemize}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+>>> lozinke["newuser"] = "jasamnovi"
+>>> lozinke
+{'turing': 'genius', 'bill': 'bluescreeen', 'guido': \
+ 'superprogrammer', 'newuser': 'jasamnovi'}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Primer: učitavanje rečnika iz fajla}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+passwd = {}
+with open('passwords', 'r') as infile:
+    for line in infile:
+        user, passw = line.split()
+        passwd[user] = passw
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operacije nad rečnikom}
+\begin{center}
+\begin{tabular}{l|l}
+\textbf{operacija} & \textbf{značenje} \\ \hline
+\texttt{<dict>.has\_key(<key>)} & vraća \texttt{True} ako postoji dati ključ \\
+\texttt{<dict>.keys()} & vraća listu ključeva \\
+\texttt{<dict>.values()} & vraća listu vrednosti \\
+\texttt{<dict>.items()} & vraća listu tupli \texttt{(key,val)} \\
+\texttt{del <dict>[<key>]} & uklanja element iz rečnika \\
+\texttt{<dict>.clear()} & uklanja sve elemente iz rečnika
+\end{tabular}
+\end{center}
+\end{frame}
+
+\section{Klase}
+
+\begin{frame}[fragile]
+\frametitle{Primer: Java klasa}
+\begin{minted}[linenos=false,fontsize=\small]{java}
+public class Point {
+  private int xCoord;
+  private int yCoord;
+  public Point() { xCoord = yCoord = 0; }
+  public Point(int x, int y) {
+    xCoord = x;
+    yCoord = y;
+  }
+  public String toString() {
+     return "(" + xCoord + ", " + yCoord + ")";
+  }
+  public int getX() { return xCoord; }
+  public int getY() { return yCoord; }
+  public void shift(int xInc, int yInc) {
+    xCoord = xCoord + xInc;
+    yCoord = yCoord + yInc;
+  }
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primer: Python klasa}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Point:
+    def __init__(self, x=0, y=0):
+        self.xCoord = x
+        self.yCoord = y
+  
+    def __str__(self):
+        return "(" + str(self.yCoord) + ", " +
+                str(self.yCoord) + ")"
+     
+    def getX(self):
+        return self.XCoord
+     
+    def getY(self):
+        return self.yCoord
+     
+    def shift(self, xInc, yInc):
+        self.xCoord += xInc
+        self.yCoord += yInc
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Klase --- Java vs Python}
+  \begin{itemize}
+    \item nema modifikatora pristupa \\ \ \\
+    \item prvi parametar metoda mora biti referenca na objekat
+    \item konvencija je da se taj objekat zove \texttt{self}
+    \item \texttt{this} (Java) $\Leftrightarrow$ \texttt{self} (Python)\\ \ \\
+    \item konstruktor je \texttt{\_\_init\_\_}
+    \item ne može postojati više konstruktora \\ \ \\
+    \item Bruce Eckel vs Guido van Rossum: \\ \myred{Why explicit self has to stay} \\ \footnotesize
+      \url{http://neopythonic.blogspot.com/2008/10/why-explicit-self-has-to-stay.html}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Klase --- Java vs Python}
+  \begin{itemize}
+    \item Java: jedna klasa -- jedan fajl, isto ime klase i fajla \\ \ \\
+    \item Python: ne mora tako
+    \item modul može imati 0, 1 ili više klasa
+    \item fajl se ne mora zvati kao klasa
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Kreiranje objekata}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+from point import *
+
+pointA = Point(5, 7)
+pointB = Point()
+\end{minted}
+\begin{center}
+  \includegraphics[scale=0.7]{ptobjects.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Metode}
+\begin{itemize}
+  \item metoda mora biti definisana unutar klase
+  \item prvi parametar mora biti \texttt{self} \\ \ \\
+  \item poziv metode:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+pointA.shift(10, 15)
+\end{minted}
+  \item zapravo se tumači kao:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+Point.shift(pointA, 10, 15)
+\end{minted}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Konstruktor}
+\begin{itemize}
+  \item može biti samo jedan konstruktor u klasi
+  \item zove se \texttt{\_\_init\_\_}
+  \item parametri konstruktora mogu imati default vrednosti
+  \item konstruktor nije obavezan
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Atributi}
+\begin{itemize}
+  \item nema eksplicitnog definisanja atributa!
+  \item atribut objekta se može dodati u konstruktoru ili drugim metodama -- u toku izvršavanja programa
+  \item $\Rightarrow$ ne moraju sve instance klase imati isti skup atributa! \\ \ \\
+  \item tipična (ne i obavezna) inicijalizacija atributa je u konstruktoru:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+def __init__(self, x=0, y=0):
+    self.xCoord = x
+    self.yCoord = y
+\end{minted}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Atributi}
+\begin{itemize}
+  \item nema eksplicitnog definisanja atributa!
+  \item atribut objekta se može dodati u konstruktoru ili drugim metodama -- u toku izvršavanja programa
+  \item $\Rightarrow$ ne moraju sve instance klase imati isti skup atributa! \\ \ \\
+  \item tipična (ne i obavezna) inicijalizacija atributa je u konstruktoru:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+def __init__(self, x=0, y=0):
+    self.xCoord = x
+    self.yCoord = y
+\end{minted}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Magične metode}
+\small
+\begin{center}
+\begin{tabular}{ll}
+\textbf{metoda} & \textbf{opis} \\ \hline
+\texttt{\_\_eq\_\_(self, other)} & implementacija operatora == \\
+\texttt{\_\_lt\_\_(self, other)} & implementacija operatora < \\
+\texttt{\_\_le\_\_(self, other)} & implementacija operatora <= \\
+\texttt{\_\_ne\_\_(self, other)} & implementacija operatora != \\
+\texttt{\_\_add\_\_(self, other)} & implementacija operatora + \\
+\texttt{\_\_iadd\_\_(self, other)} & implementacija operatora += \\
+\texttt{\_\_int\_\_(self)} & konverzija u \texttt{int} \\
+\texttt{\_\_str\_\_(self)} & konverzija u \texttt{str} \\
+\texttt{\_\_repr\_\_(self)} & konverzija u machine-readable tekst \\
+\texttt{\_\_hash\_\_(self)} & izračunavanje heša za objekat \\
+\texttt{\_\_len\_\_(self)} & implementacija funkcije len(obj) \\
+\texttt{\_\_getitem\_\_(self, key)} & pristup po ključu \texttt{obj[key]} \\
+\texttt{\_\_contains\_\_(self, key)} & implementacija operatora \texttt{in} \\
+\texttt{\_\_iter\_\_(self)} & implementacija iteratora kroz elemente \\
+... & ...
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Statički atributi}
+\begin{itemize}
+  \item definisani unutar klase, ali ne unutar metode
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class MyClass:
+    i = 3
+
+print(MyClass.i)  # 3
+
+obj1 = MyClass()
+print(obj1.i)     # 3
+
+obj2 = MyClass()
+obj2.i = 4
+print(obj1.i)     # 4
+\end{minted}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Statičke metode}
+\begin{itemize}
+  \item dekorator \texttt{@staticmethod} ili \texttt{@classmethod}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class MyClass:
+    
+    @staticmethod
+    def f1(arg1, arg2):
+        ...
+
+    @classmethod
+    def f2(cls, arg1, arg2):
+        ...
+    
+MyClass.f1(0, 0)
+MyClass.f2(0, 0)
+
+obj = MyClass()
+obj.f1(0, 0)
+obj.f2(0, 0)
+\end{minted}
+\end{itemize}
+\end{frame}
+  
+\section{Izuzeci}
+
+\begin{frame}[fragile]
+\frametitle{Izuzeci}
+\begin{itemize}
+  \item opšta forma:
+\begin{minted}[linenos=false,fontsize=\small]{python}
+try:
+    # possible errors here
+except IndexError as ex:
+    # handle this type of exception here
+except RuntimeError as ex:
+    # handle another type of exception here
+except:
+    # handle all other types of exceptions
+else:
+    # executed when there are no exceptions
+finally:
+    # cleanup actions that must always be executed
+\end{minted}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Izuzeci: primer}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+try:
+    x = 0
+    myList = [12, 50, 5, 17]
+    print(myList[3] / x)
+
+except IndexError as ex:
+    print("Error: Index out of range.")
+except ZeroDivisionError as ex:
+    print("Error: Attempt to divide by zero.")
+except (RuntimeError, TypeError, NameError):
+    pass  # do nothing
+except:
+    print("Error: An exception was raised.")
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Kreiranje izuzetaka}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+def min(value1, value2):
+    if value1 == None or value2 == None:
+        raise TypeError  # raise exception here
+    if value1 < value2:
+        return value1
+    else:
+        return value2
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Naredba \texttt{assert}}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+def average(valueList):
+    total = 0
+    # if fails, raises AssertionError:
+    assert len(valueList) > 0, "Empty list in average()."
+    for x in valueList:
+        total = total + x
+
+    avg = total / len(valueList)
+    return avg
+\end{minted}
+\end{frame}
+
+\section[Nasl]{Nasleđivanje}
+
+\begin{frame}[fragile]
+\frametitle{Nasleđivanje: roditelj}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Fish:
+    def __init__(self, first_name, last_name="Fish",
+                 skeleton="bone", eyelids=False):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.skeleton = skeleton
+        self.eyelids = eyelids
+
+    def swim(self):
+        print("The fish is swimming.")
+
+    def swim_backwards(self):
+        print("The fish can swim backwards.")
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Nasleđivanje: dete}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Trout(Fish):
+    pass
+
+terry = Trout("Terry")
+print(terry.first_name + " " + terry.last_name)
+print(terry.skeleton)
+print(terry.eyelids)
+terry.swim()
+terry.swim_backwards()
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Nasleđivanje: dete sa dodatnim metodama}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Clownfish(Fish):
+    def live_with_anemone(self):
+        print("The clownfish is coexisting with sea anemone.")
+
+
+casey = Clownfish("Casey")
+print(casey.first_name + " " + casey.last_name)
+casey.swim()
+casey.live_with_anemone()
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Nasleđivanje: redefinisanje metoda}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Shark(Fish):
+    def __init__(self, first_name, last_name="Shark",
+                 skeleton="cartilage", eyelids=True):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.skeleton = skeleton
+        self.eyelids = eyelids
+
+    def swim_backwards(self):
+        print("The shark cannot swim backwards, "
+              "but can sink backwards.")
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Poziv \texttt{super()}}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Trout(Fish):
+    def __init__(self, first_name, water = "freshwater"):
+        self.water = water
+        super().__init__(self, first_name)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Višestruko nasleđivanje}
+\begin{minted}[linenos=false,fontsize=\small]{python}
+class Coral:
+    def community(self):
+        print("Coral lives in a community.")
+
+class Anemone:
+    def protect_clownfish(self):
+        print("The anemone is protecting the clownfish.")
+
+class CoralReef(Coral, Anemone):
+    pass
+\end{minted}
+\end{frame}
+
+
 
 \end{document}
